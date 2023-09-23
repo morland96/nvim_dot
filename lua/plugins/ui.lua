@@ -31,4 +31,28 @@ return {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
   },
+  -- Telescope
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = function(_, opts)
+      opts.defaults = vim.tbl_extend("force", opts.defaults, {
+        path_display = { "truncate" },
+      })
+    end,
+  },
+  -- Bookmarks
+  {
+    "MattesGroeger/vim-bookmarks",
+    -- event = "VeryLazy",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "tom-anders/telescope-vim-bookmarks.nvim",
+    },
+    init = function()
+      vim.g.bookmark_no_default_key_mappings = 1
+    end,
+    config = function()
+      require("telescope").load_extension("vim_bookmarks")
+    end,
+  },
 }

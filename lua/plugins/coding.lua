@@ -33,7 +33,9 @@ return {
     "folke/which-key.nvim",
     opts = function(_, opts)
       opts.defaults = vim.tbl_extend("force", opts.defaults, {
-        ["<leader>r"] = { name = "+refactoring " },
+        ["<leader>r"] = { name = "+refactoring" },
+        -- ["<leader>d"] = { name = "+debug" },
+        -- ["<leader>da"] = { name = "+adapters" },
       })
     end,
   },
@@ -52,16 +54,24 @@ return {
       },
     },
   },
+  -- LSP
+  -- {
+  --   "williamboman/mason.nvim",
+  --   opts = function(_, opts)
+  --     opts.ensure_installed = opts.ensure_installed or {}
+  --     vim.list_extend(opts.ensure_installed, { "jdtls@0.57" })
+  --   end,
+  -- },
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
-      highlight = { enable = true },
       indent = { enable = true },
       ensure_installed = {
         "bash",
         "c",
         "html",
+        "java",
         "javascript",
         "jsdoc",
         "json",
@@ -79,29 +89,20 @@ return {
         "vimdoc",
         "yaml",
       },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<C-space>",
-          node_incremental = "<C-space>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
-      },
       textobjects = {
         move = {
           enable = true,
           set_jumps = true,
           goto_next_start = {
-            ["]p"] = { query = "@parameter.inner", desc = "Next parameter" },
+            ["]a"] = { query = "@parameter.inner", desc = "Next parameter" },
             ["]f"] = { query = "@function.outer", desc = "Next function start" },
-            ["]c"] = { query = "@class.outer", desc = "Next class start" },
+            ["]c"] = { query = "@conditional.outer", desc = "Next condition start" },
             ["]o"] = "@loop.*",
             ["]l"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
             ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
           },
           goto_next_end = {
-            ["]P"] = { query = "@parameter.inner", desc = "Next parameter" },
+            ["]A"] = { query = "@parameter.inner", desc = "Next parameter" },
             ["]F"] = { query = "@function.outer", desc = "Next function end" },
             ["]C"] = { query = "@class.outer", desc = "Next class end" },
             ["]O"] = "@loop.*",
@@ -109,15 +110,15 @@ return {
             ["]Z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
           },
           goto_previous_start = {
-            ["[p"] = { query = "@parameter.inner", desc = "Previous parameter" },
+            ["[a"] = { query = "@parameter.inner", desc = "Previous parameter" },
             ["[f"] = { query = "@function.outer", desc = "Previous function start" },
-            ["[c"] = { query = "@class.outer", desc = "Previous class start" },
+            ["[c"] = { query = "@conditional.outer", desc = "Previous condition start" },
             ["[o"] = "@loop.*",
             ["[l"] = { query = "@scope", query_group = "locals", desc = "Previous scope" },
             ["[z"] = { query = "@fold", query_group = "folds", desc = "Previous fold" },
           },
           goto_previous_end = {
-            ["[P"] = { query = "@parameter.inner", desc = "Previous parameter" },
+            ["[A"] = { query = "@parameter.inner", desc = "Previous parameter" },
             ["[F"] = { query = "@function.outer", desc = "Previous function end" },
             ["[C"] = { query = "@class.outer", desc = "Previous class end" },
             ["[O"] = "@loop.*",
