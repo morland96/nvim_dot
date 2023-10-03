@@ -36,7 +36,8 @@ return {
     "nvim-telescope/telescope.nvim",
     opts = function(_, opts)
       opts.defaults = vim.tbl_extend("force", opts.defaults, {
-        path_display = { "truncate" },
+        -- path_display = { "truncate" },
+        path_display = { "smart" },
       })
     end,
   },
@@ -54,5 +55,33 @@ return {
     config = function()
       require("telescope").load_extension("vim_bookmarks")
     end,
+  },
+  {
+    "ThePrimeagen/harpoon",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("harpoon").setup({
+        global_settings = {
+          save_on_toggle = false,
+          save_on_change = true,
+        },
+      })
+      require("telescope").load_extension("harpoon")
+      vim.cmd("autocmd FileType harpoon setlocal wrap")
+    end,
+  },
+  {
+    "echasnovski/mini.indentscope",
+    opts = {
+      draw = {
+        delay = 50,
+        animation = function(s, n)
+          return 10
+        end,
+      },
+    },
   },
 }

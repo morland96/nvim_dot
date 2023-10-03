@@ -7,6 +7,7 @@ else
 end
 -- Neovide Configuration
 if vim.g.neovide then
+  vim.g.neovide_input_macos_alt_is_meta = true
   vim.g.neovide_cursor_vfx_mode = ""
   vim.g.neovide_refresh_rate = 60
   vim.g.neovide_refresh_rate_idle = 5
@@ -21,7 +22,7 @@ if vim.g.neovide then
   -- vim.o.guifont = "Menlo:h14"
   -- vim.o.guifont = "FiraCode Nerd Font Mono:h14"
   -- vim.o.guifont = "SauceCodePro Nerd Font:h14"
-  vim.opt.linespace = 12
+  vim.opt.linespace = 5
 
   -- Allow clipboard copy paste in neovim
   vim.g.neovide_input_use_logo = 1
@@ -29,4 +30,6 @@ if vim.g.neovide then
   vim.api.nvim_set_keymap("!", "<D-v>", "<C-R>+", { noremap = true, silent = true })
   vim.api.nvim_set_keymap("t", "<D-v>", "<C-R>+", { noremap = true, silent = true })
   vim.api.nvim_set_keymap("v", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+
+  vim.g.indent_blankline_char = "│"
 end

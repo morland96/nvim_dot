@@ -1,6 +1,12 @@
 -- Code related plugins
 return {
   {
+    "neovim/nvim-lspconfig",
+    opts = {
+      autoformat = false,
+    },
+  },
+  {
     "simrat39/symbols-outline.nvim",
     cmd = "SymbolsOutline",
     keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
@@ -66,7 +72,8 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
-      indent = { enable = true },
+      highlight = { enable = true },
+      indent = { enable = true, disable = { "yaml", "python", "java"} },
       ensure_installed = {
         "bash",
         "c",

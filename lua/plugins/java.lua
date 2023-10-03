@@ -7,7 +7,9 @@ return {
       return {
         -- How to find the root dir for a given filename. The default comes from
         -- lspconfig which provides a function specifically for java projects.
-        root_dir = require("lspconfig.server_configurations.jdtls").default_config.root_dir,
+        root_dir = function(fname)
+          return require("jdtls.setup").find_root({ ".git" })
+        end,
 
         -- How to find the project name for a given root dir.
         project_name = function(root_dir)
@@ -65,6 +67,18 @@ return {
         dap = { hotcodereplace = "auto", config_overrides = {} },
         test = true,
       }
+    end,
+  },
+  {
+    "google/vim-codefmt",
+    dependencies = { "google/vim-maktaba", "google/vim-glaive" },
+    config = function()
+      vim.cmd("call glaive#Install()")
+      -- Java FileType
+      vim.cmd([[
+        Glaive codefmt google_java_executable="java -jar /Users/mmeng/.config/style/google-java-format-1.18.0-all-deps.jar"
+        autocmd FileType java AutoFormatBuffer google-java-format
+      ]])
     end,
   },
 }
