@@ -36,9 +36,25 @@ return {
     "nvim-telescope/telescope.nvim",
     opts = function(_, opts)
       opts.defaults = vim.tbl_extend("force", opts.defaults, {
-        -- path_display = { "truncate" },
         path_display = { "smart" },
+        layout_config = {
+          width = 0.95,
+          prompt_position = "top",
+          preview_cutoff = 120,
+        },
+        color_devicons = true,
+        sorting_strategy = "ascending",
+        winblend = 0,
+        prompt_prefix = "   ",
+        borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+        set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
       })
+
+      opts.extensions_list = { "themes", "terms", "fzf" }
+
+      opts.pickers = {
+        lsp_references = { fname_width = 55, show_line = true },
+      }
     end,
   },
   -- Bookmarks
@@ -64,6 +80,9 @@ return {
     },
     config = function()
       require("harpoon").setup({
+        menu = {
+          width = vim.api.nvim_win_get_width(0) - 40,
+        },
         global_settings = {
           save_on_toggle = false,
           save_on_change = true,
@@ -84,4 +103,47 @@ return {
       },
     },
   },
+  -- Noice
+  {
+    "folke/noice.nvim",
+    opts = {
+      lsp = {
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true,
+        },
+        progress = {
+          enabled = true,
+        },
+      },
+      presets = {
+        lsp_doc_border = true,
+        bottom_search = true,
+        command_palette = true,
+        long_message_to_split = true,
+        inc_rename = true,
+      },
+      views = {
+        mini = {
+          timeout = 1000,
+          size = { width = "auto", height = "5%"},
+        },
+      }
+    },
+  },
+  -- Kitty integration
+  {
+    "knubie/vim-kitty-navigator",
+  },
+  -- Lualine
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    opts = function(_, opts)
+      opts.options = {
+        theme = "catppuccin",
+      }
+    end,
+  }
 }

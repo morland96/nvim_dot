@@ -33,3 +33,5 @@ if vim.g.neovide then
 
   vim.g.indent_blankline_char = "│"
 end
+
+vim.g.autoformat = false

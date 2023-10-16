@@ -5,6 +5,12 @@
 local map = vim.keymap.set
 local nx = { "n", "x" }
 
+
+map("n", "<Leader>wh", "<C-w>h", { desc = "Go to left window" })
+map("n", "<Leader>wj", "<C-w>j", { desc = "Go to bottom window" })
+map("n", "<Leader>wk", "<C-w>k", { desc = "Go to top window" })
+map("n", "<Leader>wl", "<C-w>l", { desc = "Go to right window" })
+
 if vim.g.vscode then
   -- Makes vscode happy
   map("n", "<Space>", "<Cmd>call VSCodeNotify('whichkey.show')<CR>", { silent = true })
@@ -19,11 +25,6 @@ if vim.g.vscode then
   map("n", "<Leader>pp", "<Cmd>call VSCodeNotify('workbench.action.files.openFolder')<CR>")
 end
 
-map("n", "<Leader>wh", "<C-w>h", { desc = "Go to left window" })
-map("n", "<Leader>wj", "<C-w>j", { desc = "Go to bottom window" })
-map("n", "<Leader>wk", "<C-w>k", { desc = "Go to top window" })
-map("n", "<Leader>wl", "<C-w>l", { desc = "Go to right window" })
-
 if vim.g.vscode then
 else
   -- Windows Resize
@@ -31,6 +32,12 @@ else
   map("n", "<C-S-j>", "<C-w>-", { desc = "Decrease window height" })
   map("n", "<C-S-k>", "<C-w>+", { desc = "Increase window height" })
   map("n", "<C-S-l>", "<C-w>>", { desc = "Increase window width" })
+
+  -- Kitty
+  map(nx, "<C-h>", "<cmd>:KittyNavigateLef<cr>")
+  map(nx, "<C-j>", "<cmd>:KittyNavigateDown<cr>")
+  map(nx, "<C-k>", "<cmd>:KittyNavigateUp<cr>")
+  map(nx, "<C-l>", "<cmd>:KittyNavigateRight<cr>")
 
   -- Telescope
   local telescope_builtin = require("telescope.builtin")
@@ -70,10 +77,9 @@ else
   local bm = require("telescope").extensions.vim_bookmarks
   map(nx, "<Leader><enter>", bm.all, { desc = "List Bookmarks" })
   map(nx, "<Leader>mm", "<Cmd>BookmarkToggle<CR>", { desc = "Toggle Bookmark" })
-  map(nx, "<Leader>mi", "<Cmd>BookmarkAnnotate<CR>", { desc = "Toggle Bookmark" })
+  map(nx, "<Leader>mi", "<Cmd>BookmarkAnnotate<CR>", { desc = "Bookmark Annotate" })
   map(nx, "<Leader>mn", "<Cmd>BookmarkNext<CR>", { desc = "Next Bookmark" })
   map(nx, "<Leader>mp", "<Cmd>BookmarkPrev<CR>", { desc = "Previous Bookmark" })
-  map(nx, "<Leader>ma", "<Cmd>BookmarkShowAll<CR>", { desc = "Show All Bookmarks" })
   map(nx, "<Leader>ml", bm.all, { desc = "List Bookmarks" })
   map(nx, "<Leader>mc", "<Cmd>BookmarkClear<CR>", { desc = "Clear Bookmarks" })
   map(nx, "<Leader>mx", "<Cmd>BookmarkClearAll<CR>", { desc = "Clear All Bookmarks" })
@@ -108,7 +114,8 @@ else
       if client and client.name == "jdtls" then
         local wk = require("which-key")
         wk.register({
-          ["<leader>df"] = { require("jdtls").test_class() },
+          ["<leader>ct"] = { require("jdtls.tests").goto_subjects, "Goto Subjects" },
+          ["<leader>cI"] = { require("jdtls").super_implementation, "Goto Super" },
         }, {
             mode = "n", buffer = args.buf
         })
